@@ -1,4 +1,5 @@
 import argparse
+from statistics import mode
 from transformers import AutoModelForSequenceClassification, AutoTokenizer
 import torch
 import evaluate
@@ -10,15 +11,15 @@ from tokenizer import Tokenizer
 utils_obj = Utils()
 model_obj = Intentmodel()
 tokenizer_obj = Tokenizer()
-model_name = config.MODEL_PATH
 intent_index_mapping = config.INTENT_INDEX_MAPPING
 
-model = model_obj.initialize_inference_model()
-tokenizer = tokenizer_obj.initialize_inference_model()
+
 
 index_intent_mapping = utils_obj.get_index_intent_mapping(intent_index_mapping)
 
 def main(args):
+    model = model_obj.initialize_inference_model(args.modelfile_path)
+    tokenizer = tokenizer_obj.initialize_inference_model(args.modelfile_path)
     test_df = utils_obj.load_data(args.testfile_path)
     transcriptions = test_df["transcription"].tolist()
     actions = test_df["action"].tolist()
@@ -40,5 +41,6 @@ def main(args):
 if __name__ == '__main__':
   parser = argparse.ArgumentParser()
   parser.add_argument('--testfile_path', type=str, required=True)
+  parser.add_argument('--modelfile_path', type=str, required=True)
   args = parser.parse_args()
   main(args)
