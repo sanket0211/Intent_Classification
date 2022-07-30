@@ -1,5 +1,13 @@
 # Dataset Study
 
+## Some statistics of the Training Data
+
+No. of Datapoints 11566
+No. of unique actions 6
+No. of unique objects 14
+No. of unique locations 4
+
+
 ## Conduct the Study
 
 ```bash
